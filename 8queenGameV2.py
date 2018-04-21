@@ -26,7 +26,6 @@ def draw(t,c):
     printNumbersHorizontal(t)
 
 
-#veliz rata 
 
 #Clase Maquina
     
@@ -109,6 +108,11 @@ def isMoveLegal(t,col,fil):
     AuxBot = Maquina()
     return AuxBot.isLegal(t,int(col),int(fil))
 
+
+def sumScore(score):
+    score += 10
+    return score
+
 n=8
 REINAS=0
 MAX_REINAS = n
@@ -116,26 +120,50 @@ MAX_ERRORES=3
 ERRORES = 0
 RESULTADO = "Has Perdido"
 T = [-1]*n
+PLAYER_SCORE = 0
+BOT_SCORE = 0
+MAX_SCORE = 40
 
 
-while REINAS<=MAX_REINAS and ERRORES<MAX_ERRORES:
+while REINAS<=MAX_REINAS or ERRORES<MAX_ERRORES :
     fil,col = ask_play()
     if isMoveLegal(T,fil,col):
         bot = CrearBot()
         T = insert_square(T,fil,col)
         draw(T,'Q')
+        PLAYER_SCORE += 10
+        print ("Human Score = {} , Bot Score = {}".format(PLAYER_SCORE , BOT_SCORE))
+        
         print("Maquina esta pensando...")
         bot.generator(T)
         AI_fil,AI_col = getCoorXY(T,bot.values)
+
         if AI_fil  == "Imposible":
             Resultado="Has ganado!!!"
             break
+    
         t = insert_square(T,AI_fil,AI_col)
         draw(T,'@')
+
+        BOT_SCORE += 10
+        print ("Human Score = {} , Bot Score = {}".format(PLAYER_SCORE , BOT_SCORE))
+        if BOT_SCORE >= MAX_SCORE:
+            Resultado = "Winner Bot"
+            break
+        elif PLAYER_SCORE >= MAX_SCORE:
+             Resultado = "Winner Human"
+             break
+        elif PLAYER_SCORE >= MAX_SCORE and BOT_SCORE >= MAX_SCORE:
+             Resultado = "Empateee !!!!!"
+             break
         REINAS+=1
+        
     else:
         ERRORES+=1
+        PLAYER_SCORE -= 5
+        print ("Human Score = {} , Bot Score = {}".format(PLAYER_SCORE , BOT_SCORE))
         print("La jugada no es correcta , Errores = {}".format(ERRORES))
+   
     
 print(Resultado)
 
