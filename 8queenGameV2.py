@@ -1,4 +1,5 @@
 import random
+import time
 
 #Funciones de dibujo
 
@@ -113,10 +114,34 @@ MAX_ERRORES=3
 ERRORES = 0
 RESULTADO = "Has Perdido"
 T = [-1]*n
+JUGADAS=0
+noAsk=True
+TIME_LEFT = 30
 
+   
+def DeshacerJugada(t,fil,col):
+    
+    flag=input("Desea deshacer la jugada (Si/No): ")
+    if flag == "Si" or flag=="si":
+        t[col]=-1
+        draw(t,'@')
+    elif flag =="No" or flag == "no":
+        pass
+    
+def reloj(time_sec):
+    for i in range(0,time_sec,-1):
+        print("Te quedan {} segundos.".format(i),end='')
+        print("".format(i),end='')
+        
+        
 
 while REINAS<=MAX_REINAS and ERRORES<MAX_ERRORES:
+    if JUGADAS!=0 and noAsk==True:
+        DeshacerJugada(T,AI_fil,AI_col)
+
+    print("Te quedan {} segundos".format())    
     fil,col = ask_play()
+    
     if isMoveLegal(T,fil,col):
         bot = CrearBot()
         T = insert_square(T,fil,col)
@@ -124,15 +149,19 @@ while REINAS<=MAX_REINAS and ERRORES<MAX_ERRORES:
         print("Maquina esta pensando...")
         bot.generator(T)
         AI_fil,AI_col = getCoorXY(T,bot.values)
+        
         if AI_fil  == "Imposible":
             Resultado="Has ganado!!!"
             break
         t = insert_square(T,AI_fil,AI_col)
         draw(T,'@')
         REINAS+=1
+        noAsk = True
     else:
         ERRORES+=1
         print("La jugada no es correcta , Errores = {}".format(ERRORES))
+        noAsk = False
+    JUGADAS = JUGADAS + 1
     
 print(Resultado)
 
