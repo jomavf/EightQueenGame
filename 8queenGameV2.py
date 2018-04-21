@@ -27,6 +27,7 @@ def draw(t,c):
     printNumbersHorizontal(t)
 
 #Clase Maquina
+    ##
     
 class Maquina:
     def __init__(self):       
