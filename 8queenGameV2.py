@@ -25,6 +25,9 @@ def draw(t,c):
         printHorizontalLines(t) 
     printNumbersHorizontal(t)
 
+
+#veliz rata 
+
 #Clase Maquina
     
 class Maquina:
