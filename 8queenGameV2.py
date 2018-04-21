@@ -139,7 +139,7 @@ while REINAS<=MAX_REINAS and ERRORES<MAX_ERRORES:
     if JUGADAS!=0 and noAsk==True:
         DeshacerJugada(T,AI_fil,AI_col)
 
-    print("Te quedan {} segundos".format())    
+    #print("Te quedan {} segundos".format())    
     fil,col = ask_play()
     
     if isMoveLegal(T,fil,col):
